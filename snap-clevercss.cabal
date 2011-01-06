@@ -1,0 +1,38 @@
+name:                snap-clevercss
+version:             0.1
+synopsis:            A snap extension for serving stylesheets written with CleverCSS
+homepage:            http://github.com/duairc/snap-clevercss
+license:             OtherLicense
+license-file:        LICENSE
+author:              Shane O'Brien
+maintainer:          shane@duairc.com
+stability:           Experimental
+category:            Web
+cabal-version:       >= 1.2
+build-type:          Simple
+
+extra-source-files:
+  CONTRIBUTORS,
+  LICENSE
+
+Library
+  hs-source-dirs: src
+
+  exposed-modules:
+    Snap.Extension.Clever,
+    Snap.Extension.Clever.Impl
+
+  build-depends:
+    base >= 4 && < 5,
+    bytestring,
+    clevercss >= 0.2,
+    containers,
+    directory,
+    directory-tree,
+    HDBC >= 2,
+    mtl >= 2,
+    pointless-haskell >= 0.0.5,
+    snap >= 0.3 && < 0.5,
+    snap-core >= 0.3 && < 0.5,
+    utf8-string,
+    utility-ht >= 0.0.5
