@@ -50,8 +50,6 @@ import           System.Directory.Tree
 import           Text.CSS.CleverCSS
 
 
-
-
 ------------------------------------------------------------------------------
 -- | Your application's state must include a 'CleverState' in order for your
 -- application to be a 'MonadClever'.
@@ -127,7 +125,9 @@ instance (MonadSnap m, HasCleverState s) => MonadClever (ReaderT s m) where
 loadTemplate :: FilePath -> IO (Either String ByteString)
 loadTemplate f = do
     cleverCSS <- readFile f
-    fmap (fmap U.fromString) $ cleverCSSConvert f cleverCSS []
+    css <- cleverCSSConvert f cleverCSS []
+    print css
+    return $ right U.fromString $ css
 
 
 ------------------------------------------------------------------------------
@@ -153,11 +153,11 @@ loadTemplates path = readDirectoryWith reader path
         -- (String, ([String], [ByteString]))
     >>> second (uncurry zip)
         -- (String, [(String, ByteString)])
-    >>> second (map (first U.fromString))
+    >>> second (map . first $ U.fromString)
         -- (String, [(ByteString, ByteString)])
     >>> second M.fromList
         -- (String, Map ByteString ByteString)
-    >>> join (fmap toEither $ null . fst)
+    >>> (toEither =<< not . null . fst)
         -- Either String (Map ByteString ByteString)
     >>> return)
   where
