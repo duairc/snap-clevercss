@@ -126,7 +126,6 @@ loadTemplate :: FilePath -> IO (Either String ByteString)
 loadTemplate f = do
     cleverCSS <- readFile f
     css <- cleverCSSConvert f cleverCSS []
-    print css
     return $ right U.fromString $ css
 
 
